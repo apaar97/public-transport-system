@@ -1,9 +1,16 @@
 var express =  require('express');
+var db = require('./db.js');
 // Init app
-const app = express();
+var app = express();
 
 
-app.get('/',(req,res)=>{res.send("Aditya")});
+app.get('/',(req,res)=>{
+  db.query('select * from user',(err,result,fields)=>{
+	if(err) 
+		console.log(err);
+	res.send(result);
+   });
+});
 
 // Start the server
 const port = 3000;
