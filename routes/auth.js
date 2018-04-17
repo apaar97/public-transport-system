@@ -11,7 +11,7 @@ module.exports = function(passport) {
 	// =====================================
 	router.get('/', function(req, res) {
 		//res.render('landing.ejs'); // load the index.ejs file
-		res.send("aditya");
+		res.render("index.ejs");
 
 	});
 	// process the login form

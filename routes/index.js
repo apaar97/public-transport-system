@@ -3,7 +3,7 @@ var express =  require('express');
 const app = express();
 
 app.get('/profile',isLoggedIn,(req,res)=>{
-   res.send('Aditya');
+   res.send('Aditya')
 });
 
 module.exports = function(passport){

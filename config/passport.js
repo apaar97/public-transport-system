@@ -62,14 +62,14 @@ module.exports = function(passport) {
                         username:req.body.username,
                         gender:req.body.gender,
                         dob:req.body.dob,
-                        phno:req.body.phno,
+                        phno:req.body.mobile,
                         address:req.body.address
                         // use the generateHash function in our user model
                     };
 
                     var insertQuery = "INSERT INTO users ( email, password, fname, lname, gender, dob, phno) values (?,?,?,?,?,?,?)";
 
-                    connection.query(insertQuery,[newUserMysql.email, newUserMysql.password,newUserMysql.username,newUserMysql.gender,newUserMysql.dob,newUserMysql.phno,newUserMysql.address],function(err, rows) {
+                    connection.query(insertQuery,[newUserMysql.email, newUserMysql.password,newUserMysql.username,newUserMysql.gender,newUserMysql.dob,newUserMysql.mobile,newUserMysql.address],function(err, rows) {
                         if(err)
                         return done(err);
                         else{
