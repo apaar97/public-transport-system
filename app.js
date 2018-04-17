@@ -4,8 +4,11 @@ var passport= require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var session=require('express-session');
 var bodyParser=require("body-parser");
+require('./config/passport.js')(passport); // pass passport for configuration
+
 // Init app
 const app = express();
+
 
 //Setting body parser which allows express to read the body of post response
 app.use(bodyParser.urlencoded({extended:true}));
@@ -24,9 +27,12 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 //Set Routes
-var indexRoutes = require('./routes/index.js');
+var indexRoutes = require('./routes/index.js')(passport);
+var authRoutes  = require('./routes/auth.js')(passport);
 
-
+//Use Routes;
+app.use(authRoutes); 
+app.use(indexRoutes);
 
 
 
