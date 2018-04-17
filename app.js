@@ -11,8 +11,10 @@ const app = express();
 app.use(bodyParser.urlencoded({extended:true}));
 
 //View engine setup
-app.set('views',path.join(__dirname,'views'));
+app.set('views',path.join(__dirname,'public/views'));
 app.set('view engine','ejs');
+
+app.use(express.static(path.join(__dirname ,'public')));
 
 //Passport configuration
 app.use(session({
@@ -24,9 +26,10 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 //Set Routes
-var indexRoutes = require('./routes/index.js');
-
-
+//var indexRoutes = require('./routes/index.js')
+app.get('/',(req,res)=>{
+  res.render('index.ejs');
+})
 
 
 
