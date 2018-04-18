@@ -30,6 +30,8 @@ CREATE TABLE IF NOT EXISTS `' + db.database + '`.`' + db.tables[0] + '` ( \
         UNIQUE INDEX `email_UNIQUE` (`email` ASC) \
 )');
 
+
+
 console.log('Success: Database Created!');
 
 module.exports = {
