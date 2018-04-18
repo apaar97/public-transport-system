@@ -6,7 +6,7 @@ var connection = mysql.createConnection(dbconfig.connection);
 connection.query('CREATE DATABASE ' + dbconfig.database);
 
 connection.query('\
-CREATE TABLE `' + dbconfig.database + '`.`' + dbconfig.users_table + '` ( \
+CREATE TABLE IF NOT EXSISTS`' + dbconfig.database + '`.`' + dbconfig.users_table + '` ( \
     `id` INT UNSIGNED NOT NULL AUTO_INCREMENT, \
     `email` VARCHAR(60) NOT NULL, \
     `username` VARCHAR(20) NOT NULL , \

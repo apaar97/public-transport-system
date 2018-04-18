@@ -6,8 +6,12 @@ var LocalStrategy   = require('passport-local').Strategy;
 // load up the user model
 var mysql = require('mysql');
 var bcrypt = require('bcrypt-nodejs');
-var dbconfig = require('./db');
-var connection = mysql.createConnection(dbconfig.connection);
+//var dbconfig = require('./db');
+//var connection = mysql.createConnection(dbconfig.connection);
+
+var result = require('./db');
+var connection = result.connection;
+var dbconfig   = result.db;
 
 connection.query('USE ' + dbconfig.database);
 // expose this function to our app using module.exports
@@ -56,20 +60,21 @@ module.exports = function(passport) {
                 } else {
                     // if there is no user with that username
                     // create the user
+                    console.log(req.body);
                     var newUserMysql = {
                         email: email,
                         password: bcrypt.hashSync(password, null, null),
                         username:req.body.username,
                         gender:req.body.gender,
                         dob:req.body.dob,
-                        phno:req.body.mobile,
+                        phno:req.body.phno,
                         address:req.body.address
                         // use the generateHash function in our user model
                     };
 
-                    var insertQuery = "INSERT INTO users ( email, password, fname, lname, gender, dob, phno) values (?,?,?,?,?,?,?)";
+                    var insertQuery = "INSERT INTO users ( email, password, username, gender, dob, phno, address) values (?,?,?,?,?,?,?)";
 
-                    connection.query(insertQuery,[newUserMysql.email, newUserMysql.password,newUserMysql.username,newUserMysql.gender,newUserMysql.dob,newUserMysql.mobile,newUserMysql.address],function(err, rows) {
+                    connection.query(insertQuery,[newUserMysql.email, newUserMysql.password,newUserMysql.username,newUserMysql.gender,newUserMysql.dob,newUserMysql.phno,newUserMysql.address],function(err, rows) {
                         if(err)
                         return done(err);
                         else{
@@ -101,12 +106,17 @@ module.exports = function(passport) {
                 if (err)
                     return done(err);
                 if (!rows.length) {
+                    console.log('No user found.');
                     return done(null, false, req.flash('loginMessage', 'No user found.')); // req.flash is the way to set flashdata using connect-flash
                 }
 
                 // if the user is found but the password is wrong
                 if (!bcrypt.compareSync(password, rows[0].password))
+                {
+                    console.log('Oops! Wrong password.');
                     return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.')); // create the loginMessage and save it to session as flashdata
+                }   
+
 
                 // all is well, return successful user
                 return done(null, rows[0]);
