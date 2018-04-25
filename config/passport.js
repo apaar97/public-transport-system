@@ -21,16 +21,16 @@ module.exports = function(passport) {
     // passport session setup ==================================================
     // =========================================================================
     // required for persistent login sessions
-    // passport needs ability to serialize and unserialize users out of session
+    // passport needs ability to serialize and unserialize  out of session
 
     // used to serialize the user for the session
     passport.serializeUser(function(user, done) {
-        done(null, user.id);
+        done(null, user.userid);
     });
 
     // used to deserialize the user
     passport.deserializeUser(function(id, done) {
-        connection.query("SELECT * FROM users WHERE id = ? ",[id], function(err, rows){
+        connection.query("SELECT * FROM user WHERE userid = ? ",[id], function(err, rows){
             done(err, rows[0]);
         });
     });
@@ -52,7 +52,7 @@ module.exports = function(passport) {
         function(req, email, password, done) {
             // find a user whose email is the same as the forms email
             // we are checking to see if the user trying to login already exists
-            connection.query("SELECT * FROM users WHERE email = ?",[email], function(err, rows) {
+            connection.query("SELECT * FROM user WHERE email = ?",[email], function(err, rows) {
                 if (err)
                     return done(err);
                 if (rows.length) {
@@ -64,21 +64,21 @@ module.exports = function(passport) {
                     var newUserMysql = {
                         email: email,
                         password: bcrypt.hashSync(password, null, null),
-                        username:req.body.username,
+                        name:req.body.name,
                         gender:req.body.gender,
                         dob:req.body.dob,
-                        phno:req.body.phno,
+                        contact:req.body.phno,
                         address:req.body.address
                         // use the generateHash function in our user model
                     };
 
-                    var insertQuery = "INSERT INTO users ( email, password, username, gender, dob, phno, address) values (?,?,?,?,?,?,?)";
+                    var insertQuery = "INSERT INTO user ( email, password, name, gender, dob, contact, address) values (?,?,?,?,?,?,?)";
 
-                    connection.query(insertQuery,[newUserMysql.email, newUserMysql.password,newUserMysql.username,newUserMysql.gender,newUserMysql.dob,newUserMysql.phno,newUserMysql.address],function(err, rows) {
+                    connection.query(insertQuery,[newUserMysql.email, newUserMysql.password,newUserMysql.name,newUserMysql.gender,newUserMysql.dob,newUserMysql.contact,newUserMysql.address],function(err, rows) {
                         if(err)
                         return done(err);
                         else{
-                            newUserMysql.id = rows.insertId;
+                            newUserMysql.userid = rows.insertId;
                         }
                         return done(null, newUserMysql);
                     });
@@ -102,7 +102,7 @@ module.exports = function(passport) {
             passReqToCallback : true // allows us to pass back the entire request to the callback
         },
         function(req, email, password, done) { // callback with email and password from our form
-            connection.query("SELECT * FROM users WHERE email = ?",[email], function(err, rows){
+            connection.query("SELECT * FROM user WHERE email = ?",[email], function(err, rows){
                 if (err)
                     return done(err);
                 if (!rows.length) {

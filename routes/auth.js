@@ -10,32 +10,26 @@ module.exports = function(passport) {
 	// HOME PAGE (with login links) ========
 	// =====================================
 	router.get('/', function(req, res) {
-		//res.render('landing.ejs'); // load the index.ejs file
 		res.render("index.ejs");
 
 	});
 	// process the login form
 	router.post('/login', passport.authenticate('local-login', {
-            successRedirect : '/profile', // redirect to the secure profile section
             failureRedirect : '/', // redirect back to the signup page if there is an error
             failureFlash : true // allow flash messages
-		}),
-        function(req, res) {
-            console.log("hello");
+		}),(req,res)=>{
+		console.log(req.session);
+		res.redirect('/profile');
+	});
 
-            if (req.body.remember) {
-              req.session.cookie.maxAge = 1000 * 60 * 3;
-            } else {
-              req.session.cookie.expires = false;
-            }
-        res.redirect('/');
-    });
 	// process the signup form
 	router.post('/signup', passport.authenticate('local-signup', {
-		successRedirect : '/profile', // redirect to the secure profile section
-		failureRedirect : '/', // redirect back to the signup page if there is an error
-		failureFlash : true // allow flash messages
-	}));
+            failureRedirect : '/', // redirect back to the signup page if there is an error
+            failureFlash : true // allow flash messages
+		}),(req,res)=>{
+		console.log(req.session.passport.user);
+		res.redirect('/profile');
+	});
 
 	// process the logout 
 	router.get('/logout', function(req, res) {
