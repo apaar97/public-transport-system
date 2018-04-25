@@ -1,101 +1,103 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>  
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>Public Transport System</title>
 
-        <!-- Bootstrap CSS -->
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
-        <!-- Custom styles -->
-        <link href='../styles/main.css' rel="stylesheet" type="text/css">
-        <link href="../styles/dashboard.css" rel="stylesheet" type="text/css">
-    </head>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Public Transport System</title>
 
-    <body>
-        <header>
-            <!-- Fixed navbar -->
-            <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark padding-small">
-                <span class="text-white margin-left-small" style="font-size:25px; cursor:pointer; color:white" onclick="toggle()">&#9776;</span>
-                <a class="navbar-brand margin-left" href="#">Unified Public Transport Management Portal</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
-                        aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse justify-content-end margin-right" id="navbarCollapse">
-                    <span class="navbar-text margin-right">
-                        Logged in as <span class="text-success"><%= user.name %></span>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+    <!-- Custom styles -->
+    <link href='../styles/main.css' rel="stylesheet" type="text/css">
+    <link href="../styles/dashboard.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+    <header>
+        <!-- Fixed navbar -->
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark padding-small">
+            <span class="text-white margin-left-small" style="font-size:25px; cursor:pointer; color:white" onclick="toggle()">&#9776;</span>
+            <a class="navbar-brand margin-left" href="#">Unified Public Transport Management Portal</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse"
+                aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end margin-right" id="navbarCollapse">
+                <span class="navbar-text margin-right">
+                    Logged in as
+                    <span class="text-success">
+                        <%= user.name %>
                     </span>
-                </div>
-            </nav>
-        </header>
-
-        <main id="main">
-            <div id="mySidenav" class="sidenav" style="width:270px;">
-                <a href= "/profile">Profile</a> 
-                <a href="/trips">My Trips</a>
-                <a href="/card">My Card</a>
-                <a href="/history">Recharge</a>
+                </span>
             </div>
-            <div id="content" class="container margin-top padding-small" style="margin-left:370px;">
-                <div class="row mx-auto">
-                    <h4 align="center">Profile</h4>
+        </nav>
+    </header>
+    <main id="main">
+        <div id="mySidenav" class="sidenav" style="width:270px;">
+            <a href="/profile">Profile</a>
+            <a href="/trips">My Trips</a>
+            <a href="/card">My Card</a>
+            <a href="/history">Recharge</a>
+        </div>
+        <div id="content" class="container margin-top padding-small" style="margin-left:370px;">
+            <div class="card bg-light" style="width: 600px;">
+                <div class="card-header">
+                    <h4>
+                        <strong>Profile</strong>
+                    </h4>
                 </div>
-                <div class="row">
-                    <div class="col sm">
-                        <table class="table table-bordered">
-                            <tbody>
-                                <tr>
-                                    <td>Name</td>
-                                    <td><%= user.name%></td>
-                                </tr>
-                                <tr>
-                                    <td>Date of birth</td>
-                                    <td>
-                                        <%= user.dob.getDate()%> - 
-                                        <%= user.dob.getMonth()+1%> -
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <img src="https://www.w3schools.com/howto/img_avatar.png" width="200px;" style="margin:30px;">
+                        </div>
+                        <div class="col" style="margin:30px;">
+                            <p>
+                                <strong>Name :</strong>
+                                <%= user.name%>
+                            </p>
+                            <p>
+                                <strong>Date of birth :</strong>
+                                <%= user.dob.getDate()%>-
+                                    <%= user.dob.getMonth()+1%>-
                                         <%= user.dob.getYear()%>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Age</td>
-                                    <td>             
-                                    <% var ageDifMs = Date.now() - user.dob.getTime(); %>
+                            </p>
+                            <p>
+                                <strong>Age :</strong>
+                                <% var ageDifMs = Date.now() - user.dob.getTime(); %>
                                     <% var ageDate = new Date(ageDifMs); %>
-                                    <%= Math.abs(ageDate.getUTCFullYear() - 1970) %>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Email</td>
-                                    <td><%= user.email%></td>
-                                </tr>
-                                <tr>
-                                    <td>Address</td>
-                                    <td><%= user.address%></td>
-                                </tr>
-                                <tr>
-                                    <td>Contact</td>
-                                    <td><%= user.contact%></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="col sm">
+                                        <%= Math.abs(ageDate.getUTCFullYear() - 1970) %> Years
+                            </p>
+                            <p>
+                                <strong>Email :</strong>
+                                <%= user.email%>
+                            </p>
+                            <p>
+                                <strong>Address :</strong>
+                                <%= user.address%>
+                            </p>
+                            <p>
+                                <strong>Contact :</strong>
+                                <%= user.contact%>
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
-        </main>
+        </div>
+    </main>
 
-        <script type="text/javascript">
-            
-        </script>
+    <script type="text/javascript">
 
-        <!-- Bootstrap Scripts -->
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
-        <script src="../js/dashboard.js"></script>
+    </script>
 
-    </body>
+    <!-- Bootstrap Scripts -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+    <script src="../js/dashboard.js"></script>
+
+</body>
 
 </html>
