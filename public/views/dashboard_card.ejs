@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Public Transport System</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+    <!-- Custom styles -->
+    <link href='../styles/main.css' rel="stylesheet" type="text/css">
+    <link href='../styles/dashboard.css' rel="stylesheet" type="text/css">
+</head>
+
+<body>
+    <header>
+        <!-- Fixed navbar -->
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark padding-small">
+            <span class="text-white margin-left-small" style="font-size:25px; cursor:pointer; color:white" onclick="toggle()">&#9776;</span>
+            <a class="navbar-brand margin-left" href="#">Unified Public Transport Management Portal</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse"
+                aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end margin-right" id="navbarCollapse">
+                <span class="navbar-text margin-right">
+                    Logged in as
+                    <span class="text-success">
+                        User
+                    </span>
+                </span>
+            </div>
+        </nav>
+    </header>
+
+    <main id="main">
+        <div id="mySidenav" class="sidenav" style="width:270px;">
+            <a href="/profile">Profile</a>
+            <a href="/trips">My Trips</a>
+            <a href="/card">My Card</a>
+            <a href="/recharges">My Recharges</a>
+        </div>
+        <div id="content" class="container margin-top padding-small" style="margin-left:370px;">
+            <div class="row mx-auto">
+                <h4 align="center">Card</h4>
+            </div>
+            <div class="row">
+                <div class="col sm">
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr>
+                                <td>Cardno</td>
+                                <td>
+                                    <%=card.CardNo %>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Balance</td>
+                                <td>
+                                    <%= card.Balance %>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Card Type</td>
+                                <td>
+                                    <%= card.CardType %>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Issued On Date</td>
+                                <td>
+                                    <%= card.IssuedOn %>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col sm">
+                </div>
+            </div>
+            <br>
+            <div class="col-4">
+                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#recharge" aria-expanded="false" aria-controls="recharge">Recharge Now
+                </button>
+                <div class="collapse multi-collapse" id="recharge">
+                    <div class="card card-body">
+                        <form action="/signup" method="post">
+                            <div class="form-group">
+                                <input type="number" name="date" class="form-control" required placeholder="Amount">
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary">Add Money</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+
+    <!-- Bootstrap Scripts -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+    <script src='../js/dashboard.js'></script>
+
+</body>
+
+</html>

@@ -20,8 +20,8 @@ app.get('/trips',isLoggedIn,(req,res)=>{
        knex('trip')
              .where('userid',user_id)
              .then(tupple=>{
-              //res.render('dashboard_trips',{trip:tupple});
-              res.send(tupple);
+              res.render('dashboard_trips',{trip:tupple});
+              //res.send(tupple);
           }); 
 });
 
@@ -30,27 +30,27 @@ app.get('/trips',isLoggedIn,(req,res)=>{
 app.post('/trips/filter',isLoggedIn,(req,res)=>{
     
    var user_id = req.session.passport.user; 
+   console.log(req.body.date);
    knex('trip')
              .where('userid',user_id).andWhere('date',req.body.date).andWhere('modetype',req.body.type)
              .then(tupple=>{
-              // res.render('dashboard_trips',{trip:tupple,layout:false})
-              res.send(tupple);
+              res.render('dashboard_trips',{trip:tupple,layout:false})
+              //res.send(tupple);
           }); 
 });
 
 // sort trips 
-app.post('/trips/sort/:type',isLoggedIn,(req,res)=>{
-    
+app.post('/trips/sort',isLoggedIn,(req,res)=>{
    var user_id = req.session.passport.user; 
-   var type = req.params.type;
+   var type = req.body.type;
+   console.log(type);
    if(type == 'date')
    {
     knex('trip')
              .where('userid',user_id)
              .orderBy('date')
              .then(tupple=>{
-              // res.render('dashboard_trips',{trip:tupple,layout:false})
-              res.send(tupple);
+              res.render('dashboard_trips',{trip:tupple,layout:false})
           }); 
    }
    else if(type == 'fared')
@@ -59,8 +59,8 @@ app.post('/trips/sort/:type',isLoggedIn,(req,res)=>{
              .where('userid',user_id)
              .orderBy('fare','desc')
              .then(tupple=>{
-              // res.render('dashboard_trips',{trip:tupple,layout:false})
-              res.send(tupple);
+              res.render('dashboard_trips',{trip:tupple,layout:false})
+             // res.send(tupple);
           });
    }
    else
@@ -69,8 +69,8 @@ app.post('/trips/sort/:type',isLoggedIn,(req,res)=>{
              .where('userid',user_id)
              .orderBy('fare')
              .then(tupple=>{
-              // res.render('dashboard_trips',{trip:tupple,layout:false})
-              res.send(tupple);
+              res.render('dashboard_trips',{trip:tupple,layout:false})
+              //res.send(tupple);
           });
    }
 });
@@ -81,25 +81,23 @@ app.get('/card',isLoggedIn,(req,res)=>{
     knex('card')
        .where('userid',user_id)
        .then(tupple=>{
-             res.render('card',{card :tupple[0]});
+            res.render('dashboard_card',{card :tupple[0]});
        });
+});
+
+// add money to your card
+app.post('/addmoney',isLoggedIn,(req,res)=>{
+    res.send({amount :req.body.amount});
 });
 
 // Recharge History
 app.get('/history',isLoggedIn,(req,res)=>{
-   var user_id = req.session.passport.user
-    var card_no;
-    knex('card')
-       .where('userid',user_id)
-       .then(tupple=>{
-             card_no = tupple[0].cardno;
-       });
-              
+   var user_id = req.session.passport.user;
     knex('rechargedby')
-      .where('cardno',card_no)
+      .where('userid',user_id)
       .then(tupple=>{
-        res.send(tupple);
-        // res.render(,{history : tupple});
+        //res.send(tupple);
+         res.render('dashboard_recharges',{history : tupple});
       });
 });
 
@@ -110,24 +108,24 @@ app.post('/history/filter',isLoggedIn,(req,res)=>{
    knex('rechargedby')
              .where('userid',user_id).andWhere('rechargedate',req.body.date)
              .then(tupple=>{
-              // res.render('dashboard_history',{history:tupple,layout:false})
-              res.send(tupple);
+              res.render('dashboard_recharges',{history:tupple,layout:false})
+              //res.send(tupple);
           }); 
 });
 
 // sort Recharge History
-app.post('/trips/sort/:type',isLoggedIn,(req,res)=>{
+app.post('/history/sort',isLoggedIn,(req,res)=>{
     
    var user_id = req.session.passport.user; 
-   var type = req.params.type;
+   var type = req.body.type;
    if(type == 'date')
    {
     knex('rechargedby')
              .where('userid',user_id)
              .orderBy('rechargedate')
              .then(tupple=>{
-              // res.render('dashboard_trips',{trip:tupple,layout:false})
-              res.send(tupple);
+              res.render('dashboard_recharges',{history:tupple,layout:false})
+              //res.send(tupple);
           }); 
    }
    else if(type == 'amountd')
@@ -136,8 +134,8 @@ app.post('/trips/sort/:type',isLoggedIn,(req,res)=>{
              .where('userid',user_id)
              .orderBy('amount','desc')
              .then(tupple=>{
-              // res.render('dashboard_trips',{trip:tupple,layout:false})
-              res.send(tupple);
+              res.render('dashboard_recharges',{history:tupple,layout:false})
+              //res.send(tupple);
           });
    }
    else
@@ -146,8 +144,8 @@ app.post('/trips/sort/:type',isLoggedIn,(req,res)=>{
              .where('userid',user_id)
              .orderBy('amount')
              .then(tupple=>{
-              // res.render('dashboard_trips',{trip:tupple,layout:false})
-              res.send(tupple);
+              res.render('dashboard_recharges',{history:tupple,layout:false})
+              //res.send(tupple);
           });
    }
 });

@@ -5,7 +5,7 @@ module.exports = {
       host: 'localhost',
       database: 'transportdb',
       user:     'root',
-      password: 'mysql@123'
+      password: 'mysqlpassword'
   }
  }
 };

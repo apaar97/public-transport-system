@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Public Transport System</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+    <!-- Custom styles -->
+    <link href='../styles/main.css' rel="stylesheet" type="text/css">
+    <link href='../styles/dashboard.css' rel="stylesheet" type="text/css">
+</head>
+
+<body>
+    <header>
+        <!-- Fixed navbar -->
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark padding-small">
+            <span class="text-white margin-left-small" style="font-size:25px; cursor:pointer; color:white" onclick="toggle()">&#9776;</span>
+            <a class="navbar-brand margin-left" href="#">Unified Public Transport Management Portal</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse"
+                aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end margin-right" id="navbarCollapse">
+                <span class="navbar-text margin-right">
+                    Logged in as
+                    <span class="text-success">
+                        <%= user.name %>
+                    </span>
+                </span>
+            </div>
+        </nav>
+    </header>
+
+    <main id="main">
+        <div id="mySidenav" class="sidenav" style="width:270px;">
+            <a href="/profile">Profile</a>
+            <a href="/trips">My Trips</a>
+            <a href="/card">My Card</a>
+            <a href="/history">My Recharges</a>
+        </div>
+        <div id="content" class="container margin-top padding-small" style="margin-left:370px;">
+            <div class="row mx-auto">
+                <h3 align="center">My Trips</h3>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col">
+                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#filters" aria-expanded="false" aria-controls="filters">Filter By
+                    </button>
+                </div>
+                <div class="col">
+                    <form class="row" action="/trips/sort" method="post">
+                        <div class="form-group col">
+                            <select required class="form-control" name="type">
+                                <option value="date">Date</option>
+                                <option value="fared">Fare(Decreasing)</option>
+                                <option value="fare">Fare(Increasing)</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <button type="submit" class="btn btn-primary">Sort</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="collapse multi-collapse" id="filters">
+                        <div class="card card-body">
+                            <form action="/trips/filter" method="post">
+                                <div class="form-group">
+                                    <input type="date" id="id_date" name="date" class="form-control" required placeholder="Date of Birth">
+                                </div>
+                                <div class="form-group">
+                                    <select required class="form-control" name="type">
+                                        <option>Metro</option>
+                                        <option>Bus</option>
+                                        <option>Auto</option>
+                                    </select>
+                                </div>
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-primary">Filter</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <table class="table table-bordered">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Mode</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Start Point</th>
+                            <th scope="col">Start Time</th>
+                            <th scope="col">Destination Point</th>
+                            <th scope="col">End Time</th>
+                            <th scope="col">Fare</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% for(var i=0; i<trip.length; i++) {%>
+                            <tr>
+                                <td>
+                                    <%= i+1 %>
+                                </td>
+                                <td>
+                                    <%= trip[i].modetype%>
+                                </td>
+                                <td>
+                                    <%= trip[i].date.getDate()%> -
+                                        <%= trip[i].date.getMonth()+1%> -
+                                            <%= 2018%>
+                                </td>
+                                <td>
+                                    <%= trip[i].startlocation%>
+                                </td>
+                                <td>
+                                    <%= trip[i].starttime%>
+                                </td>
+                                <td>
+                                    <%= trip[i].endlocation%>
+                                </td>
+                                <td>
+                                    <%= trip[i].endtime%>
+                                </td>
+                                <td>
+                                    <%= trip[i].fare%>
+                                </td>
+                            </tr>
+                            <% } %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <!-- Bootstrap Scripts -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+    <script src='../js/dashboard.js'></script>
+
+</body>
+
+</html>
