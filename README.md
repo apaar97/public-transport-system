@@ -1,4 +1,4 @@
-### Public Transport DBMS
+## Public Transport System
 
 Public Transport database system - one integrated smart card for all public transport.
 
